@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+*.log
+*.tsbuildinfo
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+
+# 示例配置需要保留
+!server/.env.example
+
+# IDE / 工具本地数据（不纳入版本控制）
+.codebuddy/

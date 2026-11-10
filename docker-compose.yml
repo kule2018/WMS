@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: wms-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wms
+    ports:
+      - "3306:3306"
+    volumes:
+      # 首次启动自动执行建库脚本（CREATE DATABASE + 建表 + 演示数据）
+      - ./sql/wms.sql:/docker-entrypoint-initdb.d/01-wms.sql:ro
+      - wms-mysql-data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  wms-mysql-data:
